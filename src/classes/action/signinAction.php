@@ -26,7 +26,7 @@ HTML;
                     <input type='text' name='email' id='email' required><br><br>
 
                     <label for='mdp'>Mot de passe :</label><br>
-                    <input type='text' name='mdp' id='mdp' required><br><br>               
+                    <input type='password' name='mdp' id='mdp' required><br><br>               
 
                     <button type='submit'>Connexion</button>
                 </form>";
