@@ -93,7 +93,6 @@ HTML;
             }
 
             $uploadDir = __DIR__ . '/../../../audio/';
-            var_dump(__DIR__);
             $randomName = uniqid('track_', true) . '.mp3';
             $destinationPath = $uploadDir . $randomName;
 

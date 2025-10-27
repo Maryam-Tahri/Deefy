@@ -34,7 +34,7 @@ HTML;
             }
 
             $playlist = new Playlist($nom);
-            $_SESSION['playlist'] = $playlist;
+            $_SESSION['playlist'] = serialize($playlist);
 
             $renderer = new AudioListRenderer($playlist);
             $affichage = $renderer->render();
