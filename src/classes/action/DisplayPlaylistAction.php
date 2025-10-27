@@ -13,7 +13,12 @@ use PDO;
 class DisplayPlaylistAction extends Action
 {
     public function execute(): String {
+        if (!isset($_SESSION['user'])){
+            return <<<HTML
+<div>Merci de vous connecter</div>
+HTML;
 
+        }
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $bdd = DeefyRepository::getInstance()->getPDO();
             $stmt = $bdd->prepare("SELECT id_pl,nom FROM user2playlist INNER JOIN playlist ON playlist.id=user2playlist.id_pl");
