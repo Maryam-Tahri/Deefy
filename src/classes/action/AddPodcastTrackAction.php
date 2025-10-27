@@ -88,7 +88,7 @@ class AddPodcastTrackAction extends Action
             }
 
             $uploadDir = __DIR__ . '/../../../audio/';
-
+            var_dump(__DIR__);
             $randomName = uniqid('track_', true) . '.mp3';
             $destinationPath = $uploadDir . $randomName;
 
@@ -96,7 +96,7 @@ class AddPodcastTrackAction extends Action
                 return "<p>Erreur : impossible de déplacer le fichier.</p>";
             }
 
-            $trackPath = 'audio/' . $randomName;
+            $trackPath = '../audio/' . $randomName;
 
             $track = new AlbumTrack(
                 $titre,
@@ -109,9 +109,9 @@ class AddPodcastTrackAction extends Action
                 $duree
             );
 
-            $playlist = $_SESSION['playlist'];
+            $playlist = unserialize($_SESSION['playlist']);
             $playlist->ajouterPiste($track);
-            $_SESSION['playlist'] = $playlist;
+            $_SESSION['playlist'] = serialize($playlist);
 
 
             $renderer = new AudioListRenderer($playlist);
