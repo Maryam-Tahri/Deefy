@@ -6,6 +6,7 @@ use iutnc\deefy\repository\DeefyRepository;
 
 try{
     DeefyRepository::setConfig('db.config.ini');
+    echo "✅ Configuration chargée !<br>";
 }catch(Exception $e){
     echo $e->getMessage();
 }

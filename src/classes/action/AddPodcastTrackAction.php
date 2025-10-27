@@ -23,7 +23,7 @@ HTML;
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $html = "<h2>Ajouter une nouvelle piste audio</h2>
-                <form method='post' enctype='multipart/form-data' action='?action=add-track'>
+                <form method='post' enctype='multipart/form-data' action='?action=add-podcast'>
                     <label for='titre'>Titre :</label><br>
                     <input type='text' name='titre' id='titre' required><br><br>
 

@@ -28,8 +28,8 @@ HTML;
 <select name='playlist' required>
 HTML;
             while($row  = $stmt->fetch(PDO::FETCH_ASSOC)){
-                $own = AuthzProvider::checkPlaylistOwner($row['id_pl']);
-                if ($own){
+                    $own = AuthzProvider::checkPlaylistOwner($row['id_pl']);
+                    if ($own){
                 $html .= <<<HTML
 <option value='{$row['id_pl']}'>{$row['nom']}</option>
 HTML;
@@ -48,6 +48,7 @@ HTML;
                 $playlist = $repo->findPlaylistById($_POST['playlist']);
                 $rendererList = new AudioListRenderer($playlist);
                 $html="<div>".$rendererList->render()."</div>";
+                $html .= "<a href='?action=add-track'>Ajouter une nouvelle piste</a>";
                 $_SESSION['playlist'] = serialize($playlist);
                 return $html;
             }

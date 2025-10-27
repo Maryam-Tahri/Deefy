@@ -4,6 +4,7 @@ namespace iutnc\deefy\dispatch;
 
 use iutnc\deefy\action\AddPlaylistAction;
 use iutnc\deefy\action\AddPodcastTrackAction;
+use iutnc\deefy\action\AddTrackAction;
 use iutnc\deefy\action\DefaultAction;
 use iutnc\deefy\action\DisplayPlaylistAction;
 use iutnc\deefy\action\AddUserAction;
@@ -33,6 +34,10 @@ class Dispatcher
                 $this->renderPage($action->execute());
                 break;
             case "add-track":
+                $action = new AddTrackAction();
+                $this->renderPage($action->execute());
+                break;
+            case "add-podcast":
                 $action = new AddPodcastTrackAction();
                 $this->renderPage($action->execute());
                 break;
@@ -48,6 +53,7 @@ class Dispatcher
                 $action = new LogoutAction();
                 $this->renderPage($action->execute());
                 break;
+
 
             default:
                 $this->renderPage("pas d'action");

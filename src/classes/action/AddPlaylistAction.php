@@ -4,6 +4,7 @@ namespace iutnc\deefy\action;
 
 use iutnc\deefy\audio\lists\Playlist;
 use iutnc\deefy\render\AudioListRenderer;
+use iutnc\deefy\repository\DeefyRepository;
 
 class AddPlaylistAction extends Action
 {
@@ -34,6 +35,10 @@ HTML;
             }
 
             $playlist = new Playlist($nom);
+
+            $repo = DeefyRepository::getInstance();
+            $playlist = $repo->saveEmptyPlaylist($playlist);
+
             $_SESSION['playlist'] = serialize($playlist);
 
             $renderer = new AudioListRenderer($playlist);
