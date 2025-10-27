@@ -10,9 +10,14 @@ class AddPodcastTrackAction extends Action
     public function execute(): string
     {
 
+        if (!isset($_SESSION['user'])){
+            return <<<HTML
+<div>Merci de vous connecter</div>
+HTML;
+        }
 
         if (!isset($_SESSION['playlist'])) {
-            return "<p>Aucune playlist trouvée. <a href='?action=add-playlist'>Créer une playlist</a></p>";
+            return "<p>Aucune playlist sélectionné . <a href='?action=display-playlist'>Choissisez-en une</a></p>";
         }
 
 

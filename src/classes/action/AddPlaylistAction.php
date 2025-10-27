@@ -9,6 +9,11 @@ class AddPlaylistAction extends Action
 {
     public function execute(): string
     {
+        if (!isset($_SESSION['user'])) {
+            return <<<HTML
+<div>Merci de vous connecter</div>
+HTML;
+        }
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $html = "<h2>Créer une nouvelle playlist</h2>
                     <form method='post' action='?action=add-playlist'>
