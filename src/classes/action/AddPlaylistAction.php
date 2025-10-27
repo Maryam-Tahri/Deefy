@@ -2,6 +2,7 @@
 
 namespace iutnc\deefy\action;
 
+use Cassandra\DefaultFunction;
 use iutnc\deefy\audio\lists\Playlist;
 use iutnc\deefy\render\AudioListRenderer;
 use iutnc\deefy\repository\DeefyRepository;
@@ -40,7 +41,6 @@ HTML;
             $playlist = $repo->saveEmptyPlaylist($playlist);
 
             $_SESSION['playlist'] = serialize($playlist);
-
             $renderer = new AudioListRenderer($playlist);
             $affichage = $renderer->render();
 
