@@ -84,6 +84,13 @@ class DeefyRepository
     }
 
     public function saveAlbumTrack(AlbumTrack $track): AlbumTrack {
+
+        $exist = $this->findAlbumTrackByAttributes($track->__get('titre'), $track->__get('artiste'), $track->__get('album'), $track->__get('numero'));
+
+        if ($exist !== null) {
+            $track->id = $exist;
+            return $track;
+        }
         $sql = "INSERT INTO track (titre, genre, duree, filename, type, artiste_album, titre_album, annee_album, numero_album) 
             VALUES (:titre, :genre, :duree, :fichier, 'A', :artiste, :album, :annee, :numero)";
 
@@ -103,6 +110,18 @@ class DeefyRepository
     }
 
     public function addTrackToPlaylist(int $trackId, int $playlistId): void {
+
+        $sql_check = "SELECT COUNT(*) FROM playlist2track 
+                      WHERE id_pl = :id_pl AND id_track = :id_track";
+        $verif = $this->pdo->prepare($sql_check);
+        $verif->bindValue(':id_pl', $playlistId, PDO::PARAM_INT);
+        $verif->bindValue(':id_track', $trackId, PDO::PARAM_INT);
+        $verif->execute();
+
+        if ($verif->fetchColumn() > 0) {
+            return;  //on fait rien si la musiqie est deja dans la playlist
+        }
+
         // Calculer le prochain numéro de piste
         $sql_max = "SELECT COALESCE(MAX(no_piste_dans_liste), 0) + 1 
                 FROM playlist2track 
@@ -112,7 +131,7 @@ class DeefyRepository
         $stmt_max->execute();
         $nextTrackNumber = $stmt_max->fetchColumn();
 
-
+        // Insérer l'association
         $sql = "INSERT INTO playlist2track (id_pl, id_track, no_piste_dans_liste) 
             VALUES (:id_pl, :id_track, :no_piste_dans_liste)";
 
@@ -192,5 +211,25 @@ class DeefyRepository
         }
 
         return $playlist;
+    }
+
+    public function findAlbumTrackByAttributes(string $titre, string $artiste, string $album, int $numero): int {
+        $sql = "SELECT id FROM track 
+                WHERE type = 'A' 
+                AND titre = :titre 
+                AND artiste_album = :artiste 
+                AND titre_album = :album 
+                AND numero_album = :numero 
+                ";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindValue(':titre', $titre);
+        $stmt->bindValue(':artiste', $artiste);
+        $stmt->bindValue(':album', $album);
+        $stmt->bindValue(':numero', $numero, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return  (int)$result['id'] ;
     }
 }
