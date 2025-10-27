@@ -2,7 +2,7 @@
 
 namespace iutnc\deefy\action;
 
-use iutnc\deefy\audio\listes\Playlist;
+use iutnc\deefy\audio\lists\Playlist;
 use iutnc\deefy\render\AudioListRenderer;
 
 class AddPlaylistAction extends Action
