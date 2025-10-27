@@ -119,8 +119,7 @@ HTML;
 
                 // DEBUG: Vérifier que la playlist a bien un ID
                 if (!isset($playlist->id) || $playlist->id <= 0) {
-                    return "<p>Erreur : La playlist n'a pas d'ID valide (ID: " .
-                        ($playlist->id ?? 'null') . "). La playlist n'a pas été sauvegardée en base.</p>";
+                    return "<p>Erreur : La playlist n'a pas d'ID valide la playlist n'a pas été sauvegardée en base.</p>";
                 }
 
                 $repo = DeefyRepository::getInstance();
@@ -130,8 +129,7 @@ HTML;
 
                 //Vérifier que la playlist a bien un ID
                 if (!isset($savedTrack->id) || $savedTrack->id <= 0) {
-                    return "<p>Erreur : La piste n'a pas été sauvegardée correctement (ID: " .
-                        ($savedTrack->id ?? 'null') . ").</p>";
+                    return "<p>Erreur : La piste n'a pas été sauvegardée correctement </p>";
                 }
 
 
@@ -149,9 +147,7 @@ HTML;
                 return $success . $affichage . $lien;
 
             } catch (\Exception $e) {
-                return "<p> Erreur lors de l'ajout de la piste : " .
-                    $e->getMessage(). "</p>" .
-                    "<p>Trace : <pre>" . $e->getTraceAsString() . "</pre></p>";
+                return "<p> Erreur lors de l'ajout de la piste </p>";
             }
         }
 
