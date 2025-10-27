@@ -30,7 +30,7 @@ class AddUserAction extends Action
                 $html = "<div>Inscription fini !</div><br><a href='?action=login'>Se connecter</a>";
                 return $html;
             }else{
-                $html = "<p>Erreur à l'inscription.</p>";
+                $html = "<p>Erreur à l'inscription. Il faut : <li><Strong>au moins 10 caractère</Strong></li><li><Strong>au moins 1 caractère spécial</Strong></li><li><Strong>au moins une majuscule</Strong></li><li><Strong>au moins une minuscule</Strong></li></p>";
                 return $html;
             }
         }

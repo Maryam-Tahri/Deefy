@@ -29,6 +29,13 @@ class AuthnProvider {
 
     public static function register(string $email,string $passwd): bool {
         $bdd = DeefyRepository::getInstance()->getPDO();
+        $user = $bdd->prepare("SELECT email FROM User WHERE email = ?");
+        $user->bindParam(1, $email);
+        $user->execute();
+        $row = $user->fetch();
+        if ($row['email']) {
+            return false;
+        }
         $digit = preg_match("#[\d]#", $passwd); // au moins un digit
         $special = preg_match("#[\W]#", $passwd); // au moins un car. spécial
         $lower = preg_match("#[a-z]#", $passwd); // au moins une minuscule
