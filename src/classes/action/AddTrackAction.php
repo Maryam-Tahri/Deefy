@@ -11,9 +11,7 @@ class AddTrackAction extends Action
     public function execute(): string
     {
         if (!isset($_SESSION['user'])) {
-            return <<<HTML
-<div>Merci de vous connecter</div>
-HTML;
+            return "<div>Merci de vous connecter</div>";
         }
 
         if (!isset($_SESSION['playlist'])) {
@@ -21,7 +19,8 @@ HTML;
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            $html = "<h2>Ajouter une nouvelle piste audio</h2>
+            return <<<HTML
+                <h2>Ajouter une nouvelle piste audio</h2>
                 <form method='post' enctype='multipart/form-data' action='?action=add-track'>
                     <label for='titre'>Titre :</label><br>
                     <input type='text' name='titre' id='titre' required><br><br>
@@ -48,8 +47,8 @@ HTML;
                     <input type='file' name='userfile' id='userfile' accept='.mp3,audio/mpeg' required><br><br>
 
                     <button type='submit'>Créer la piste</button>
-                </form>";
-            return $html;
+                </form>
+            HTML;
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -70,16 +69,12 @@ HTML;
                 $playlist = unserialize($_SESSION['playlist']);
                 $repo = DeefyRepository::getInstance();
 
-
                 $existingTrackId = $repo->findAlbumTrackByAttributes($titre, $artiste, $album, $numero);
 
                 if ($existingTrackId !== null) {
-
                     $track = new AlbumTrack($titre, '', $album, $numero, $artiste, $annee, $genre, $duree);
                     $track->id = $existingTrackId;
-
                     $repo->addTrackToPlaylist($track->id, $playlist->id);
-
 
                     $playlist = $repo->findPlaylistById($playlist->id);
                     $_SESSION['playlist'] = serialize($playlist);
@@ -87,13 +82,12 @@ HTML;
                     $renderer = new AudioListRenderer($playlist);
                     $affichage = $renderer->render();
                     $lien = '<p><a href="?action=add-track">Ajouter encore une piste</a></p>';
-
                     $message = "<p>Cette piste existait déjà dans la base de données. Elle a été ajoutée à votre playlist.</p>";
 
                     return $message . $affichage . $lien;
                 }
 
-                
+                // Vérification du fichier uploadé
                 if (!isset($_FILES['userfile']) || $_FILES['userfile']['error'] !== UPLOAD_ERR_OK) {
                     return "<p>Erreur : fichier audio manquant ou erreur lors de l'upload.</p>";
                 }
@@ -101,12 +95,8 @@ HTML;
                 $file = $_FILES['userfile'];
                 $filename = $file['name'];
 
-                if (substr(strtolower($filename), -4) !== '.mp3') {
-                    return "<p>Erreur : le fichier doit être au format .mp3</p>";
-                }
-
-                if ($file['type'] !== 'audio/mpeg') {
-                    return "<p>Erreur : type MIME invalide</p>";
+                if (substr(strtolower($filename), -4) !== '.mp3' || $file['type'] !== 'audio/mpeg') {
+                    return "<p>Erreur : le fichier doit être un MP3 valide.</p>";
                 }
 
                 if (stripos($filename, '.php') !== false) {
@@ -131,19 +121,19 @@ HTML;
 
                 $trackPath = 'audio/' . $randomName;
 
-                $track = new AlbumTrack(
-                    $titre,
-                    $trackPath,
-                    $album,
-                    $numero,
-                    $artiste,
-                    $annee,
-                    $genre,
-                    $duree
-                );
+                $track = new AlbumTrack($titre, $trackPath, $album, $numero, $artiste, $annee, $genre, $duree);
 
+                // Vérifier playlist
+                if (!isset($playlist->id) || $playlist->id <= 0) {
+                    return "<p>Erreur : La playlist n'a pas d'ID valide (non sauvegardée en base).</p>";
+                }
 
                 $savedTrack = $repo->saveAlbumTrack($track);
+
+                if (!isset($savedTrack->id) || $savedTrack->id <= 0) {
+                    return "<p>Erreur : La piste n'a pas été sauvegardée correctement.</p>";
+                }
+
                 $repo->addTrackToPlaylist($savedTrack->id, $playlist->id);
 
                 $playlist = $repo->findPlaylistById($playlist->id);
@@ -153,13 +143,10 @@ HTML;
                 $affichage = $renderer->render();
                 $lien = '<p><a href="?action=add-track">Ajouter encore une piste</a></p>';
 
-                $success = "<p> Nouvelle piste créée et ajoutée avec succès !</p>";
-
-                return $success . $affichage . $lien;
+                return "<p>Nouvelle piste créée et ajoutée avec succès !</p>" . $affichage . $lien;
 
             } catch (\Exception $e) {
-                return "<p>Erreur lors de l'ajout de la piste : " .
-                    htmlspecialchars($e->getMessage()) . "</p>";
+                return "<p>Erreur lors de l'ajout de la piste : " . htmlspecialchars($e->getMessage()) . "</p>";
             }
         }
 

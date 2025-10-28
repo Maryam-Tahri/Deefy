@@ -65,6 +65,11 @@ class DeefyRepository
         $stmt->bindValue(':nom', $playlist->__get('nom'));
         $stmt->execute();
         $playlist->id = (int)$this->pdo->lastInsertId();
+        $id = $playlist->id;
+        $stmnt = $this->pdo->prepare("INSERT INTO user2playlist (id_user,id_pl) VALUES (:id_user,:id_pl)");
+        $stmnt->bindValue(':id_pl', $id);
+        $stmnt->bindValue(':id_user', $_SESSION['user']['id']);
+        $stmnt->execute();
         return $playlist;
     }
 

@@ -21,8 +21,8 @@ class AuthnProvider {
             throw new AuthException("Auth error : invalid credentials");
         }
         $_SESSION['user'] = [
-            'id'=>$row['id'],
-            $email=>$row['passwd']
+            'id' => $row['id'],
+            'email' => $email,
         ];
         return true;
     }
