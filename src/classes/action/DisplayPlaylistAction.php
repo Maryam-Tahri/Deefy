@@ -48,7 +48,7 @@ HTML;
                 $playlist = $repo->findPlaylistById($_POST['playlist']);
                 $rendererList = new AudioListRenderer($playlist);
                 $html="<div>".$rendererList->render()."</div>";
-                $html .= "<a href='?action=add-track'>Ajouter une nouvelle piste</a>";
+                $html .= "<a href='?action=add-track'>Ajouter une nouvelle piste</a><br><a href='?action=del-track'>Supprimer une piste</a>";
                 $_SESSION['playlist'] = serialize($playlist);
                 return $html;
             }

@@ -124,7 +124,7 @@ class DeefyRepository
         $verif->execute();
 
         if ($verif->fetchColumn() > 0) {
-            return;  //on fait rien si la musiqie est deja dans la playlist
+            return;  //on fait rien si la musique est deja dans la playlist
         }
 
         // Calculer le prochain numéro de piste
@@ -240,5 +240,12 @@ class DeefyRepository
         }else{
             return null;
         }
+    }
+
+    public function delTrackFromPlaylist(int $id_pl, int $id_track){
+        $stmt = $this->pdo->prepare("DELETE FROM playlist2track WHERE id_pl = :id_pl AND id_track = :id_track");
+        $stmt->bindValue(':id_pl', $id_pl, PDO::PARAM_INT);
+        $stmt->bindValue(':id_track', $id_track, PDO::PARAM_INT);
+        return $stmt->execute();
     }
 }

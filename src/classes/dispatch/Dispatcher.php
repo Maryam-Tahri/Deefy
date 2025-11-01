@@ -6,6 +6,7 @@ use iutnc\deefy\action\AddPlaylistAction;
 use iutnc\deefy\action\AddPodcastTrackAction;
 use iutnc\deefy\action\AddTrackAction;
 use iutnc\deefy\action\DefaultAction;
+use iutnc\deefy\action\DeleteTrackAction;
 use iutnc\deefy\action\DisplayPlaylistAction;
 use iutnc\deefy\action\AddUserAction;
 use iutnc\deefy\action\logoutAction;
@@ -53,8 +54,10 @@ class Dispatcher
                 $action = new LogoutAction();
                 $this->renderPage($action->execute());
                 break;
-
-
+            case "del-track":
+                $action = new DeleteTrackAction();
+                $this->renderPage($action->execute());
+                break;
             default:
                 $this->renderPage("pas d'action");
                 break;
