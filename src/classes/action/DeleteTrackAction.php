@@ -46,7 +46,7 @@ HTML;
             if ($res){
                 return <<<HTML
                 <div>Piste bien retirée de la playlist</div>
-                <a href='?action=display-track'>Voir mes playlists</a>
+                <a href='?action=display-playlist'>Voir mes playlists</a>
                 HTML;
             }else{
                 return <<<HTML

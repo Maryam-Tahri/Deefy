@@ -82,7 +82,7 @@ class AddTrackAction extends Action
                     $renderer = new AudioListRenderer($playlist);
                     $affichage = $renderer->render();
                     $lien = '<p><a href="?action=add-track">Ajouter encore une piste</a></p>';
-                    $message = "<p>Cette piste existait déjà dans la base de données. Elle a été ajoutée à votre playlist.</p>";
+                    $message = "<p>Elle a été ajoutée à votre playlist.</p>";
 
                     return $message . $affichage . $lien;
                 }
