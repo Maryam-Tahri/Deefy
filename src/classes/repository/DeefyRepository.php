@@ -218,7 +218,7 @@ class DeefyRepository
         return $playlist;
     }
 
-    public function findAlbumTrackByAttributes(string $titre, string $artiste, string $album, int $numero): int {
+    public function findAlbumTrackByAttributes(string $titre, string $artiste, string $album, int $numero) {
         $sql = "SELECT id FROM track 
                 WHERE type = 'A' 
                 AND titre = :titre 
@@ -235,6 +235,10 @@ class DeefyRepository
         $stmt->execute();
 
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        return  (int)$result['id'] ;
+        if(isset($result['id'])){
+            return  (int)$result['id'] ;
+        }else{
+            return null;
+        }
     }
 }

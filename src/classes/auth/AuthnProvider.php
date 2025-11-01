@@ -9,7 +9,7 @@ class AuthnProvider {
     public static function signin(string $email,
                                   string $passwd2check): bool {
         $bdd = DeefyRepository::getInstance()->getPDO();
-        $user = $bdd->prepare("SELECT id,passwd FROM user WHERE email = ?");
+        $user = $bdd->prepare("SELECT id,passwd FROM User WHERE email = ?");
         $user->bindParam(1, $email);
         $user->execute();
         $row = $user->fetch();
@@ -44,7 +44,7 @@ class AuthnProvider {
             return false;
         }
         $hashed = password_hash($passwd, PASSWORD_DEFAULT, ['cost' => 12]);
-        $user = $bdd->prepare("INSERT INTO user (email, passwd,role) VALUES (?, ?,1)");
+        $user = $bdd->prepare("INSERT INTO User (email, passwd,role) VALUES (?, ?,1)");
         $user->bindParam(1, $email);
         $user->bindParam(2, $hashed);
         $user->execute();

@@ -9,8 +9,8 @@ class logoutAction
     {
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             unset($_SESSION['user']);
+            unset($_SESSION['playlist']);
             $html = "<div>Vous êtes bien déconnecter</div>";
-            session_destroy();
             return $html;
         }
         return "<p>Méthode HTTP non supportée.</p>";

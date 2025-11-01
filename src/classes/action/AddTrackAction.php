@@ -119,7 +119,7 @@ class AddTrackAction extends Action
                     return "<p>Erreur : impossible de déplacer le fichier.</p>";
                 }
 
-                $trackPath = 'audio/' . $randomName;
+                $trackPath = '../audio/' . $randomName;
 
                 $track = new AlbumTrack($titre, $trackPath, $album, $numero, $artiste, $annee, $genre, $duree);
 
