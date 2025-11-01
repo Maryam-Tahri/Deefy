@@ -5,7 +5,7 @@ use iutnc\deefy\dispatch\Dispatcher;
 use iutnc\deefy\repository\DeefyRepository;
 
 try{
-    DeefyRepository::setConfig('../../db.config.ini');
+    DeefyRepository::setConfig('../../../../db.config.ini');
 }catch(Exception $e){
     echo $e->getMessage();
 }

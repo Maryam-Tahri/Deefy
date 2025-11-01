@@ -8,5 +8,4 @@ $baseDir = dirname($vendorDir);
 return array(
     'iutnc\\deefy\\' => array($baseDir . '/classes'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/src'),
-    'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
 );
