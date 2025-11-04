@@ -5,7 +5,7 @@ TAHRI Maryam
 WISPELAERE Mathis
 
 Lien vers le dépôt GitHub : https://github.com/Maryam-Tahri/Deefy
-Lien vers le dépôt Webetu :
+Lien vers le dépôt Webetu : https://webetu.iutnc.univ-lorraine.fr/www/e66018u/dev_web/Deefy/src/
 
 Fonctionnalités principales
 
